@@ -1,0 +1,4 @@
+- [Multi-platform bot dashboard](multi-platform-dashboard.md) — satu dashboard menampilkan semua bot lewat proxy localhost + registry, bukan satu dashboard per platform.
+- [Deployment single run command](deployment-single-run-command.md) — publish hanya jalankan 1 command; pakai launcher start-all.js + deploymentTarget vm untuk jalankan semua bot.
+- [iMeetzu PoW fallback flow](imeetzu-pow-fallback.md) — text.servsig.com issues tokens via solvable SHA-256 PoW when Turnstile JS isn't run; legitimate site fallback, not a bypass.
+- [platforms-registry.js is cached in-process](platforms-registry-reload.md) — editing it needs a restart of ALL bot workflows (not just the new one) or /api/stats/all won't show the new platform.

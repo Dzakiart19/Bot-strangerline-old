@@ -19,6 +19,7 @@ const { config, createGuest, runSession } = require("../lib/platforms/y99");
 const { stats }      = require("../lib/core/stats");
 const { log }        = require("../lib/core/logger");
 const { startServer } = require("../lib/core/server");
+const { nextDelayMs } = require("../lib/core/retry");
 
 // Inisialisasi stats global
 stats.platform  = "y99";
@@ -35,6 +36,7 @@ async function mainLoop() {
 
   while (true) {
     sessionCount++;
+    let delayAfterSession = config.RECONNECT_DELAY_MS;
     const guest  = createGuest();
     const roomId = config.ROOM_IDS[roomIndex % config.ROOM_IDS.length];
     roomIndex++;
@@ -44,13 +46,19 @@ async function mainLoop() {
     try {
       const reason = await runSession(guest, roomId);
       log("INFO", `[y99] Sesi #${sessionCount} selesai (${reason}). Stats: sent=${stats.totalMsgSent}, replies=${stats.totalReplies}, errors=${stats.totalErrors}`);
+      delayAfterSession = nextDelayMs(config.RECONNECT_DELAY_MS, reason);
+      if (delayAfterSession > config.RECONNECT_DELAY_MS) {
+        log("WARN", `[y99] Retry berikutnya dalam ${Math.ceil(delayAfterSession / 1000)}s`);
+      }
     } catch (err) {
       log("ERROR", `[y99] Sesi #${sessionCount} error tak tertangani: ${err.message}`);
       stats.totalErrors++;
+      delayAfterSession = nextDelayMs(config.RECONNECT_DELAY_MS, err.message);
+      log("WARN", `[y99] Retry berikutnya dalam ${Math.ceil(delayAfterSession / 1000)}s`);
     }
 
     stats.status = "idle";
-    await new Promise((r) => setTimeout(r, config.RECONNECT_DELAY_MS));
+    await new Promise((r) => setTimeout(r, delayAfterSession));
   }
 }
 

@@ -4,7 +4,7 @@
  * Launcher tunggal untuk deployment (autoscale hanya menjalankan SATU perintah).
  * Men-spawn semua bot platform (lihat lib/core/platforms-registry.js) sebagai
  * child process di port masing-masing, di dalam satu proses induk, supaya
- * publish/deploy menjalankan ke-4 bot sekaligus — bukan cuma satu.
+ * publish/deploy menjalankan semua bot sekaligus — bukan cuma satu.
  *
  * Dashboard tetap bisa menampilkan semua platform karena tiap bot saling
  * fetch stats via http://localhost:<port> (lihat lib/core/server.js).

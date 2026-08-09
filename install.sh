@@ -48,7 +48,7 @@ echo "    - express            (Web server monitoring)"
 
 # ── 4. Cek file bot ────────────────────────────────────────
 echo -e "${CYAN}[4/4] Verifikasi file...${NC}"
-FILES=("bot/strangerline-bot.js" "bot/opentalk-bot.js" "bot/yapping-bot.js" "bot/silly-bot.js" "bot/chatib-bot.js" "bot/y99-bot.js" "public/monitor.html")
+FILES=("bot/strangerline-bot.js" "bot/opentalk-bot.js" "bot/yapping-bot.js" "public/monitor.html")
 for f in "${FILES[@]}"; do
   if [ -f "$f" ]; then
     echo -e "${GREEN}✓ $f${NC}"
@@ -66,8 +66,5 @@ echo ""
 echo -e "  StrangerLine  : ${YELLOW}node bot/strangerline-bot.js${NC}          (port 5000)"
 echo -e "  OpenTalk      : ${YELLOW}PORT=8000 node bot/opentalk-bot.js${NC}   (port 8000)"
 echo -e "  Yapping       : ${YELLOW}PORT=3002 node bot/yapping-bot.js${NC}    (port 3002)"
-echo -e "  SillyChat     : ${YELLOW}PORT=3001 node bot/silly-bot.js${NC}      (port 3001)"
-echo -e "  Chatib        : ${YELLOW}PORT=3003 node bot/chatib-bot.js${NC}     (port 3003)"
-echo -e "  Y99           : ${YELLOW}PORT=6000 node bot/y99-bot.js${NC}       (port 6000)"
 echo -e "  Health check  : ${YELLOW}http://localhost:<port>/health${NC}"
 echo ""
